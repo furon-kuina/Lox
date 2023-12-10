@@ -8,14 +8,33 @@ import (
 )
 
 func main() {
-	args := os.Args
-	if len(args) > 2 {
-		fmt.Println("Usage: glox [script]")
-	} else if len(args) == 2 {
-		runFile(args[0])
-	} else {
-		runPrompt()
+
+	expr := &BinaryExpr{
+		left: &UnaryExpr{
+			right: &LiteralExpr{value: NewToken(Number, "123", 0, 0, 0)},
+			op:    NewToken(Minus, "-", 0, 0, 0),
+		},
+		right: &GroupingExpr{&LiteralExpr{value: NewToken(Number, "12.34", 0, 0, 0)}},
+		op:    NewToken(Star, "*", 0, 0, 0),
 	}
+
+	ue := &UnaryExpr{
+		right: &LiteralExpr{value: NewToken(Number, "123", 0, 0, 0)},
+		op:    NewToken(Minus, "-", 0, 0, 0),
+	}
+
+	ap := &AstPrinter{}
+	fmt.Println(ap.print(expr))
+	fmt.Println(ap.print(ue))
+
+	// args := os.Args
+	// if len(args) > 2 {
+	// fmt.Println("Usage: glox [script]")
+	// } else if len(args) == 2 {
+	// runFile(args[1])
+	// } else {
+	// runPrompt()
+	// }
 }
 
 func runFile(path string) error {

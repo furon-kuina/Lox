@@ -18,6 +18,10 @@ func NewToken(tt TokenType, lexeme string, line, begin, end uint) Token {
 	}
 }
 
+func (token Token) ToString() string {
+	return token.lexeme
+}
+
 type TokenType uint
 
 const (
